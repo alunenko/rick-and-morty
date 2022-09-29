@@ -1,0 +1,27 @@
+{
+  "name": "rick-and-morty",
+  "version": "1.0.0",
+  "description": "Code sample",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alunenko/rick-and-morty.git"
+  },
+  "keywords": [
+    "rickandmorty",
+    "codesample",
+    "ram"
+  ],
+  "author": "Anton Lunenko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alunenko/rick-and-morty/issues"
+  },
+  "homepage": "https://github.com/alunenko/rick-and-morty#readme",
+  "dependencies": {
+    "@angular/cli": "^14.2.4"
+  }
+}
