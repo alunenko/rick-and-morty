@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CharactersComponent } from './components/_pages/characters/characters.component';
 import { CharactersListComponent } from './components/characters-list/characters-list.component';
+import CharactersListService from "./components/characters-list/characters-list.service";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -14,9 +16,12 @@ import { CharactersListComponent } from './components/characters-list/characters
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    CharactersListService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
