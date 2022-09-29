@@ -1,0 +1,107 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "rick-and-morty": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/rick-and-morty",
+      "sourceRoot": "projects/rick-and-morty/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/rick-and-morty",
+            "index": "projects/rick-and-morty/src/index.html",
+            "main": "projects/rick-and-morty/src/main.ts",
+            "polyfills": "projects/rick-and-morty/src/polyfills.ts",
+            "tsConfig": "projects/rick-and-morty/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/rick-and-morty/src/favicon.ico",
+              "projects/rick-and-morty/src/assets"
+            ],
+            "styles": [
+              "projects/rick-and-morty/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/rick-and-morty/src/environments/environment.ts",
+                  "with": "projects/rick-and-morty/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "rick-and-morty:build:production"
+            },
+            "development": {
+              "browserTarget": "rick-and-morty:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "rick-and-morty:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/rick-and-morty/src/test.ts",
+            "polyfills": "projects/rick-and-morty/src/polyfills.ts",
+            "tsConfig": "projects/rick-and-morty/tsconfig.spec.json",
+            "karmaConfig": "projects/rick-and-morty/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/rick-and-morty/src/favicon.ico",
+              "projects/rick-and-morty/src/assets"
+            ],
+            "styles": [
+              "projects/rick-and-morty/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    }
+  }
+}
