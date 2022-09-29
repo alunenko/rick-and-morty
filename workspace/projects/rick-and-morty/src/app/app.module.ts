@@ -7,6 +7,7 @@ import { CharactersComponent } from './components/_pages/characters/characters.c
 import { CharactersListComponent } from './components/characters-list/characters-list.component';
 import CharactersListService from "./components/characters-list/characters-list.service";
 import {HttpClientModule} from "@angular/common/http";
+import {CharactersListResolver} from "./components/characters-list/characters-list.resolver";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {HttpClientModule} from "@angular/common/http";
     HttpClientModule
   ],
   providers: [
-    CharactersListService
+    CharactersListService,
+    CharactersListResolver
   ],
   bootstrap: [AppComponent]
 })

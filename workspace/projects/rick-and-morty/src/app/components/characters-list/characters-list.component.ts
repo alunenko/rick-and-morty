@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import CharactersListService from "./characters-list.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-characters-list',
@@ -7,17 +7,16 @@ import CharactersListService from "./characters-list.service";
   styleUrls: ['./characters-list.component.scss']
 })
 export class CharactersListComponent implements OnInit {
-  characters: any[] = [];
+  characters: any;
 
   constructor(
-    private charactersListService: CharactersListService
-  ) { }
+    private activatedRoute: ActivatedRoute
+  ) {
+
+  }
 
   ngOnInit(): void {
-    this.charactersListService.getAllCharacters().subscribe((getAllCharactersResponse: any) => {
-      console.log('getAllCharactersResponse ', getAllCharactersResponse);
-      this.characters = getAllCharactersResponse.results;
-    });
+    this.characters = this.activatedRoute.snapshot.data['characters'];
   }
 
 }

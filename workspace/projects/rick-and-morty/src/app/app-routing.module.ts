@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {CharactersComponent} from "./components/_pages/characters/characters.component";
+import {CharactersListRoute} from "./components/characters-list/characters-list.route";
 
 const routes: Routes = [
   {
@@ -8,10 +8,7 @@ const routes: Routes = [
     redirectTo: 'characters',
     pathMatch: 'full'
   },
-  {
-    path: 'characters',
-    component: CharactersComponent
-  }
+  CharactersListRoute
 ];
 
 @NgModule({
