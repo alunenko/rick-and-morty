@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
+import {ICharacterListResults} from "./characters-list";
 
 @Component({
   selector: 'app-characters-list',
@@ -7,7 +8,7 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./characters-list.component.scss']
 })
 export class CharactersListComponent implements OnInit {
-  characters: any;
+  characters: ICharacterListResults[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute

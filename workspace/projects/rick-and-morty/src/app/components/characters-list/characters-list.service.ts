@@ -1,8 +1,9 @@
 import {Injectable} from "@angular/core";
-import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import {UrsListEnum} from "../../core/url-list.enum";
+import {Observable} from "rxjs";
 import {delay, map} from "rxjs/operators";
+import {UrsListEnum} from "../../core/url-list.enum";
+import {ICharacterListResults, ICharactersListResponse} from "./characters-list";
 
 @Injectable()
 export default class CharactersListService {
@@ -10,11 +11,11 @@ export default class CharactersListService {
     private httpClient: HttpClient
   ) {}
 
-  getCharacters(): Observable<any> {
-    return this.httpClient.get(`${UrsListEnum.BASE}${UrsListEnum.CHARACTER}`)
+  getCharacters(): Observable<ICharacterListResults[]> {
+    return this.httpClient.get<ICharactersListResponse>(`${UrsListEnum.BASE}${UrsListEnum.CHARACTER}`)
       .pipe(
         delay(3000),
-        map((getCharactersResponse: any) => getCharactersResponse.results)
+        map((getCharactersResponse: ICharactersListResponse) => getCharactersResponse.results)
       )
     ;
   }
