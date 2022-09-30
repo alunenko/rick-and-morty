@@ -1,3 +1,8 @@
-<p *ngFor="let item of characters">
-  <span>{{item.name}}</span> <span>{{item.status}}</span>
-</p>
+<div infinite-scroll
+     [infiniteScrollDistance]="infiniteScrollDistance"
+     (scrolled)="onScrollDown()">
+  <p *ngFor="let item of characters">
+    <span>{{item.name}}</span> <span>{{item.status}}</span>
+  </p>
+  <p *ngIf="isLoading">loading . . .</p>
+</div>

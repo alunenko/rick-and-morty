@@ -8,6 +8,7 @@ import { CharactersListComponent } from './components/characters-list/characters
 import CharactersListService from "./components/characters-list/characters-list.service";
 import {HttpClientModule} from "@angular/common/http";
 import {CharactersListResolver} from "./components/characters-list/characters-list.resolver";
+import {InfiniteScrollModule} from "ngx-infinite-scroll";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {CharactersListResolver} from "./components/characters-list/characters-li
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    InfiniteScrollModule
   ],
   providers: [
     CharactersListService,
