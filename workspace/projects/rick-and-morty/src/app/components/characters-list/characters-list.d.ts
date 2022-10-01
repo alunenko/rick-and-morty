@@ -1,6 +1,6 @@
 export interface ICharactersListResponse {
   info: ICharacterListInfo,
-  results: ICharacterListResults[]
+  results: ICharacter[]
 }
 
 interface ICharacterListInfo {
@@ -10,7 +10,11 @@ interface ICharacterListInfo {
   prev: string | null
 }
 
-export interface ICharacterListResults {
+interface ICharacterLike {
+  like: boolean
+}
+
+export interface ICharacter extends ICharacterLike{
   id: number,
   name: string,
   status: string,

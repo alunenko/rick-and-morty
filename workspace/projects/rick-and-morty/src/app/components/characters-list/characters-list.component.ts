@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {ICharacterListResults} from "./characters-list";
+import {ICharacter} from "./characters-list";
 import CharactersListService from "./characters-list.service";
 import {take} from "rxjs/operators";
 
@@ -10,39 +10,50 @@ import {take} from "rxjs/operators";
   styleUrls: ['./characters-list.component.scss']
 })
 export class CharactersListComponent implements OnInit {
-  private charactersSet: Set<ICharacterListResults> = new Set();
-  private currentPage = '';
-
-  characters: ICharacterListResults[] = [];
+  characters: ICharacter[] = [];
   infiniteScrollDistance = 2;
   isLoading = false;
+
+  like: (item: ICharacter) => void;
+
+  private charactersSet: Set<ICharacter> = new Set();
+  private currentPage = '';
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private charactersListService: CharactersListService
   ) {
-
+    this.like = this.charactersListService.like;
   }
 
   ngOnInit(): void {
-    this.activatedRoute.snapshot.data['characters'].map((item: any) => this.charactersSet.add(item));
-    this.characters = [...this.charactersSet];
-    console.log('this.characters ', this.characters);
+    this.handleGetCharactersResponse(this.activatedRoute.snapshot.data['characters']);
   }
 
   onScrollDown(): void {
-    if (this.charactersListService.next && (this.charactersListService.next !== this.currentPage)) {
+    let preventMultipleRequest = this.charactersListService.next &&
+      (this.charactersListService.next !== this.currentPage)
+    ;
+
+    if (preventMultipleRequest) {
       this.isLoading = true;
       this.currentPage = this.charactersListService.next!;
 
       this.charactersListService.getCharacters(true)
         .pipe(take(1))
         .subscribe((getCharactersResponse) => {
-          getCharactersResponse.map((item) => this.charactersSet.add(item));
-          this.characters = [...this.charactersSet];
+          this.handleGetCharactersResponse(getCharactersResponse);
           this.isLoading = false;
         });
     }
   }
 
+  private handleGetCharactersResponse(getCharactersResponse: ICharacter[]): void {
+    getCharactersResponse.map((item: any) => {
+      item.like = false;
+      this.charactersSet.add(item);
+    });
+
+    this.characters = [...this.charactersSet];
+  }
 }

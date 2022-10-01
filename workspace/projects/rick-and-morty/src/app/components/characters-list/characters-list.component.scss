@@ -1,0 +1,7 @@
+.like {
+  cursor: pointer;
+  font-weight: bold;
+  color: lightgrey;
+
+  &.m-green { color: green; }
+}

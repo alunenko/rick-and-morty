@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {delay, map} from "rxjs/operators";
 import {UrsListEnum} from "../../core/url-list.enum";
-import {ICharacterListResults, ICharactersListResponse} from "./characters-list";
+import {ICharacter, ICharactersListResponse} from "./characters-list";
 
 @Injectable()
 export default class CharactersListService {
@@ -15,7 +15,7 @@ export default class CharactersListService {
     private httpClient: HttpClient
   ) {}
 
-  getCharacters(next: boolean = false): Observable<ICharacterListResults[]> {
+  getCharacters(next: boolean = false): Observable<ICharacter[]> {
     let url = next ? this.next! : this.getDefaultCharactersUrl;
     console.log('getCharacters');
     return this.httpClient.get<ICharactersListResponse>(url)
@@ -27,5 +27,9 @@ export default class CharactersListService {
         })
       )
     ;
+  }
+
+  like(item: ICharacter): void {
+    item.like = !item.like;
   }
 }
