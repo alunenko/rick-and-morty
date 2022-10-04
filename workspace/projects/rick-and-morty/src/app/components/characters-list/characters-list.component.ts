@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ICharacter} from "./characters-list";
 import CharactersListService from "./characters-list.service";
@@ -16,7 +16,6 @@ export class CharactersListComponent implements OnInit {
 
   like: (item: ICharacter) => void;
 
-  private charactersSet: Set<ICharacter> = new Set();
   private currentPage = '';
 
   constructor(
@@ -27,33 +26,24 @@ export class CharactersListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.handleGetCharactersResponse(this.activatedRoute.snapshot.data['characters']);
+    this.characters = this.activatedRoute.snapshot.data['characters'];
   }
 
   onScrollDown(): void {
-    let preventMultipleRequest = this.charactersListService.next &&
-      (this.charactersListService.next !== this.currentPage)
+    let preventMultipleRequest = this.charactersListService.nextCharactersUrl &&
+      (this.charactersListService.nextCharactersUrl !== this.currentPage)
     ;
 
     if (preventMultipleRequest) {
       this.isLoading = true;
-      this.currentPage = this.charactersListService.next!;
+      this.currentPage = this.charactersListService.nextCharactersUrl!;
 
       this.charactersListService.getCharacters(true)
         .pipe(take(1))
         .subscribe((getCharactersResponse) => {
-          this.handleGetCharactersResponse(getCharactersResponse);
+          this.characters = getCharactersResponse;
           this.isLoading = false;
         });
     }
-  }
-
-  private handleGetCharactersResponse(getCharactersResponse: ICharacter[]): void {
-    getCharactersResponse.map((item: any) => {
-      item.like = false;
-      this.charactersSet.add(item);
-    });
-
-    this.characters = [...this.charactersSet];
   }
 }
