@@ -8,7 +8,7 @@
   "files": [
     "src/main.ts",
     "src/polyfills.ts",
-    "src/app/core/url-list.enum.ts"
+    "src/app/core/enum/url-list.enum.ts"
   ],
   "include": [
     "src/**/*.d.ts"
