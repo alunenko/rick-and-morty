@@ -22,7 +22,7 @@ export class CharactersListComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private charactersListService: CharactersListService
   ) {
-    this.like = this.charactersListService.like;
+    this.like = this.charactersListService.like.bind(this.charactersListService);
   }
 
   ngOnInit(): void {

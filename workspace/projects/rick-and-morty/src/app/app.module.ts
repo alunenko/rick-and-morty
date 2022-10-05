@@ -10,6 +10,7 @@ import { CharactersListComponent } from './components/characters-list/characters
 import CharactersListService from "./components/characters-list/characters-list.service";
 import {CharactersListResolver} from "./components/characters-list/characters-list.resolver";
 import {InfiniteScrollModule} from "ngx-infinite-scroll";
+import ArrayHelper from "./core/helpers/array.helper";
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {InfiniteScrollModule} from "ngx-infinite-scroll";
   ],
   providers: [
     CharactersListService,
+    ArrayHelper,
     CharactersListResolver
   ],
   bootstrap: [AppComponent]

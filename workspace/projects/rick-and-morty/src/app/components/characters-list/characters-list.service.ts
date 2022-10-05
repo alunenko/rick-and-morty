@@ -1,20 +1,38 @@
-import {Injectable} from "@angular/core";
+import {Injectable, NgZone} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {delay, map} from "rxjs/operators";
-import {UrsListEnum} from "../../core/url-list.enum";
-import {ICharacter, ICharactersListResponse} from "./characters-list";
+import {UrsListEnum} from "../../core/enum/url-list.enum";
+import ArrayHelper from "../../core/helpers/array.helper";
+import {
+  ICharacter,
+  ICharactersListResponse,
+  IUserDataLike,
+  StorageDataType,
+  UsersType
+} from "./characters-list";
 
 @Injectable()
 export default class CharactersListService {
   nextCharactersUrl: string | null = null;
   characters: ICharacter[] = [];
+  userName: UsersType = 'guest';
+  storageData: StorageDataType;
 
+  private appStorageName = 'ramd';
   private getDefaultCharactersUrl = `${UrsListEnum.BASE}${UrsListEnum.CHARACTER}`;
 
   constructor(
-    private httpClient: HttpClient
-  ) {}
+    private httpClient: HttpClient,
+    private ngZone: NgZone,
+    private arrayHelper: ArrayHelper
+  ) {
+    this.storageData = {
+      [this.userName]: {
+        likes: []
+      }
+    };
+  }
 
   getCharacters(isNextCharactersUrl: boolean = false): Observable<ICharacter[]> {
     let url = isNextCharactersUrl ? this.nextCharactersUrl! : this.getDefaultCharactersUrl;
@@ -22,13 +40,14 @@ export default class CharactersListService {
     return this.httpClient.get<ICharactersListResponse>(url)
       .pipe(
         delay(3000),
-        map((getCharactersResponse: ICharactersListResponse) => {
+        map((getCharactersResponse: ICharactersListResponse): ICharacter[] => {
           this.nextCharactersUrl = getCharactersResponse.info.next;
 
-          getCharactersResponse.results.map((item: any) => {
-            item.like = false;
-            this.characters.push(item);
+          getCharactersResponse.results.map((responseResultsItem: ICharacter): void => {
+            this.characters.push(responseResultsItem);
           });
+
+          this.initLikes();
 
           return this.characters;
         })
@@ -38,5 +57,55 @@ export default class CharactersListService {
 
   like(item: ICharacter): void {
     item.like = !item.like;
+
+    this.updateStorageData(item);
+  }
+
+  private updateStorageData(item: ICharacter): void {
+    this.getDataFromStorage();
+
+    if(item.like) {
+      this.storageData[this.userName]?.likes.push({id: item.id});
+    } else {
+      this.storageData[this.userName]?.likes.map((storageDataItem: IUserDataLike, $index): void => {
+        if(item.id === storageDataItem.id) {
+          this.storageData[this.userName]?.likes.splice($index, 1);
+        }
+      });
+    }
+
+    this.ngZone.runOutsideAngular((): void => {
+      this.storageData[this.userName]?.likes.sort(this.arrayHelper.sortFn);
+      localStorage.setItem(this.appStorageName, JSON.stringify(this.storageData));
+    });
+  }
+
+  private initLikes() {
+    this.getDataFromStorage();
+
+    let charactersLength = this.characters.length;
+    let storageDataCharactersLength = this.storageData[this.userName]?.likes.length;
+
+    for(let i = 0; i < charactersLength; i++) {
+      for(let j = 0; j < storageDataCharactersLength!; j++) {
+        this.characters[i].like = +this.characters[i].id === +this.storageData[this.userName]!.likes[j].id;
+
+        if(this.characters[i].like) {
+          break;
+        }
+      }
+    }
+  }
+
+  private getDataFromStorage(): void {
+    let storageData: string | null = null;
+
+    this.ngZone.runOutsideAngular(() => {
+      storageData = localStorage.getItem(this.appStorageName);
+
+      if (storageData) {
+        this.storageData = JSON.parse(storageData);
+      }
+    });
   }
 }
