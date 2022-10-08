@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
+import {ICharacter} from "../../characters-list/characters-list";
 
 @Component({
   selector: 'app-characters',
@@ -6,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./characters.component.scss']
 })
 export class CharactersComponent implements OnInit {
+  filterLiked = false;
+  characters: ICharacter[] = [];
 
-  constructor() { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+  ) { }
 
   ngOnInit(): void {
+    this.characters = this.activatedRoute.snapshot.data['characters'];
   }
 
 }

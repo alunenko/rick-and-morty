@@ -11,6 +11,7 @@ import CharactersListService from "./components/characters-list/characters-list.
 import {CharactersListResolver} from "./components/characters-list/characters-list.resolver";
 import {InfiniteScrollModule} from "ngx-infinite-scroll";
 import ArrayHelper from "./core/helpers/array.helper";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -18,13 +19,14 @@ import ArrayHelper from "./core/helpers/array.helper";
     CharactersComponent,
     CharactersListComponent
   ],
-  imports: [
-    BrowserModule,
-    CommonModule,
-    AppRoutingModule,
-    HttpClientModule,
-    InfiniteScrollModule
-  ],
+    imports: [
+        BrowserModule,
+        CommonModule,
+        AppRoutingModule,
+        HttpClientModule,
+        InfiniteScrollModule,
+        FormsModule
+    ],
   providers: [
     CharactersListService,
     ArrayHelper,

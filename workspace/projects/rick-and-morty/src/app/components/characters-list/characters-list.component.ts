@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ICharacter} from "./characters-list";
 import CharactersListService from "./characters-list.service";
@@ -10,7 +10,10 @@ import {take} from "rxjs/operators";
   styleUrls: ['./characters-list.component.scss']
 })
 export class CharactersListComponent implements OnInit {
-  characters: ICharacter[] = [];
+  @Input() characters: ICharacter[] = [];
+  likedList: ICharacter[] = [];
+  charactersList: ICharacter[] = [];
+  _filterLiked = false;
   infiniteScrollDistance = 2;
   isLoading = false;
 
@@ -27,6 +30,17 @@ export class CharactersListComponent implements OnInit {
 
   ngOnInit(): void {
     this.characters = this.activatedRoute.snapshot.data['characters'];
+    this.charactersList = this.characters;
+    this.filter({});
+  }
+
+  get filterLiked() {
+    return this._filterLiked;
+  }
+
+  set filterLiked(value) {
+    this._filterLiked = value;
+    this.charactersList = value ? this.likedList : this.characters;
   }
 
   onScrollDown(): void {
@@ -45,5 +59,9 @@ export class CharactersListComponent implements OnInit {
           this.isLoading = false;
         });
     }
+  }
+
+  filter({by = 'like', value = true}) {
+    this.likedList = this.characters.filter((character: any): any => character[by] === value);
   }
 }
