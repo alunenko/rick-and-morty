@@ -1,23 +1,6 @@
 <ul>
-  <li>
-    page: characters/all
-    <ul>
-      <li><a href="#">Show liked characters</a></li>
-      <li>autocomplete</li>
-      <li>
-        infinity scroll
-        <ul>
-          <li>app-characters-list</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>
-    page: characters/liked
-    <ul>
-      <li>back</li>
-      <li>app-characters-list</li>
-    </ul>
-  </li>
+  <li><a href="#">Show liked characters</a> -> onChanges -> characters (app-characters-list)</li>
+  <li>autocomplete -> onChanges -> characters (app-characters-list)</li>
+  <li>infinity scroll -> onChanges -> characters (app-characters-list)</li>
 </ul>
 <app-characters-list [characters]="characters"></app-characters-list>
