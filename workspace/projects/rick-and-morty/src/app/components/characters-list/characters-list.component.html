@@ -1,11 +1,6 @@
-<div infinite-scroll
-     [infiniteScrollDistance]="infiniteScrollDistance"
-     (scrolled)="onScrollDown()">
-  <p *ngFor="let item of characters">
-    <span>{{item.name}}</span>&nbsp;<span>{{item.status}}</span>&nbsp;<span [ngClass]="{'m-green': item.like}"
-                                                                            (click)="like(item)"
-                                                                            class="like"
-                                                                            [title]="item.like ? 'Liked' : 'Like'">L</span>
-  </p>
-  <p *ngIf="isLoading">loading . . .</p>
-</div>
+<p *ngFor="let item of characters">
+  <span>{{item.name}}</span>&nbsp;<span>{{item.status}}</span>&nbsp;<span [ngClass]="{'m-green': item.like}"
+                                                                          (click)="like(item)"
+                                                                          class="like"
+                                                                          [title]="item.like ? 'Liked' : 'Like'">L</span>
+</p>

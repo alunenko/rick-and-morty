@@ -8,9 +8,11 @@ import { AppComponent } from './app.component';
 import { CharactersComponent } from './components/_pages/characters/characters.component';
 import { CharactersListComponent } from './components/characters-list/characters-list.component';
 import CharactersListService from "./components/characters-list/characters-list.service";
-import {CharactersListResolver} from "./components/characters-list/characters-list.resolver";
 import {InfiniteScrollModule} from "ngx-infinite-scroll";
 import ArrayHelper from "./core/helpers/array.helper";
+import {FormsModule} from "@angular/forms";
+import {CharactersResolver} from "./components/_pages/characters/characters.resolver";
+import {CharactersService} from "./components/_pages/characters/characters.service";
 
 @NgModule({
   declarations: [
@@ -18,17 +20,19 @@ import ArrayHelper from "./core/helpers/array.helper";
     CharactersComponent,
     CharactersListComponent
   ],
-  imports: [
-    BrowserModule,
-    CommonModule,
-    AppRoutingModule,
-    HttpClientModule,
-    InfiniteScrollModule
-  ],
+    imports: [
+        BrowserModule,
+        CommonModule,
+        AppRoutingModule,
+        HttpClientModule,
+        InfiniteScrollModule,
+        FormsModule
+    ],
   providers: [
+    CharactersService,
     CharactersListService,
     ArrayHelper,
-    CharactersListResolver
+    CharactersResolver
   ],
   bootstrap: [AppComponent]
 })

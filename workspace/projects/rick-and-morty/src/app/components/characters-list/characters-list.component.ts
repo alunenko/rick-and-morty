@@ -1,8 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {ICharacter} from "./characters-list";
+import {Component, Input, OnInit} from '@angular/core';
 import CharactersListService from "./characters-list.service";
-import {take} from "rxjs/operators";
+import {ICharacter} from "../../core/characters";
 
 @Component({
   selector: 'app-characters-list',
@@ -10,40 +8,19 @@ import {take} from "rxjs/operators";
   styleUrls: ['./characters-list.component.scss']
 })
 export class CharactersListComponent implements OnInit {
-  characters: ICharacter[] = [];
-  infiniteScrollDistance = 2;
-  isLoading = false;
-
-  like: (item: ICharacter) => void;
-
-  private currentPage = '';
+  @Input() characters: ICharacter[] = [];
 
   constructor(
-    private activatedRoute: ActivatedRoute,
     private charactersListService: CharactersListService
   ) {
-    this.like = this.charactersListService.like.bind(this.charactersListService);
   }
 
   ngOnInit(): void {
-    this.characters = this.activatedRoute.snapshot.data['characters'];
+
   }
 
-  onScrollDown(): void {
-    let preventMultipleRequest = this.charactersListService.nextCharactersUrl &&
-      (this.charactersListService.nextCharactersUrl !== this.currentPage)
-    ;
-
-    if (preventMultipleRequest) {
-      this.isLoading = true;
-      this.currentPage = this.charactersListService.nextCharactersUrl!;
-
-      this.charactersListService.getCharacters(true)
-        .pipe(take(1))
-        .subscribe((getCharactersResponse) => {
-          this.characters = getCharactersResponse;
-          this.isLoading = false;
-        });
-    }
+  like(item: ICharacter): void {
+    item.like = !item.like;
+    this.charactersListService.likeEvent.emit(item);
   }
 }

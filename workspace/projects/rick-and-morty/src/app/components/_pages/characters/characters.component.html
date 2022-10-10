@@ -1,4 +1,16 @@
-<p>liked characters</p>
-<p>autocomplete</p>
-<p>filter</p>
-<app-characters-list></app-characters-list>
+<ul>
+  <li>autocomplete -> onChanges -> characters (app-characters-list)</li>
+</ul>
+
+<label for="filterLikedId">Show liked characters
+  <input id="filterLikedId"
+         type="checkbox"
+         [(ngModel)]="filterLiked">
+</label>
+<div infinite-scroll
+     [infiniteScrollDistance]="infiniteScrollDistance"
+     [infiniteScrollDisabled]="filterLiked"
+     (scrolled)="onScrollDown()">
+  <app-characters-list [characters]="activeCharacterList"></app-characters-list>
+  <p *ngIf="isLoading">loading . . .</p>
+</div>
