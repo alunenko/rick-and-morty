@@ -1,17 +1,6 @@
-<label for="filterLikedId">Show liked characters
-  <input id="filterLikedId"
-         type="checkbox"
-         [(ngModel)]="filterLiked">
-</label>
-<div infinite-scroll
-     [infiniteScrollDistance]="infiniteScrollDistance"
-     [infiniteScrollDisabled]="filterLiked"
-     (scrolled)="onScrollDown()">
-  <p *ngFor="let item of charactersList">
-    <span>{{item.name}}</span>&nbsp;<span>{{item.status}}</span>&nbsp;<span [ngClass]="{'m-green': item.like}"
-                                                                            (click)="like(item)"
-                                                                            class="like"
-                                                                            [title]="item.like ? 'Liked' : 'Like'">L</span>
-  </p>
-  <p *ngIf="isLoading">loading . . .</p>
-</div>
+<p *ngFor="let item of characters">
+  <span>{{item.name}}</span>&nbsp;<span>{{item.status}}</span>&nbsp;<span [ngClass]="{'m-green': item.like}"
+                                                                          (click)="like(item)"
+                                                                          class="like"
+                                                                          [title]="item.like ? 'Liked' : 'Like'">L</span>
+</p>
