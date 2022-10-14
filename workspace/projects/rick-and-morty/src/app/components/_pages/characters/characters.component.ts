@@ -3,6 +3,7 @@ import {take} from "rxjs/operators";
 import CharactersListService from "../../characters-list/characters-list.service";
 import {ICharacter} from "../../../core/characters";
 import {CharactersService} from "./characters.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-characters',
@@ -21,14 +22,16 @@ export class CharactersComponent implements OnInit {
 
   constructor(
     private charactersListService: CharactersListService,
-    private charactersService: CharactersService
+    private charactersService: CharactersService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.charactersListService.likeEvent.subscribe((item: ICharacter) => {
-      this.charactersService.updateStorageData(item);
+    this.charactersListService.likeEvent.subscribe((character: ICharacter) => {
+      this.charactersService.updateStorageData(character);
       this.init();
     });
+
     this.characters = this.charactersService.characters;
 
     this.init();

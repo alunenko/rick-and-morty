@@ -13,12 +13,16 @@ import ArrayHelper from "./core/helpers/array.helper";
 import {FormsModule} from "@angular/forms";
 import {CharactersResolver} from "./components/_pages/characters/characters.resolver";
 import {CharactersService} from "./components/_pages/characters/characters.service";
+import { CharacterDetailsComponent } from './components/character-details/character-details.component';
+import {CharacterComponent} from "./components/_pages/character/character.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     CharactersComponent,
-    CharactersListComponent
+    CharactersListComponent,
+    CharacterComponent,
+    CharacterDetailsComponent
   ],
     imports: [
         BrowserModule,

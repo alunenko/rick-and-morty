@@ -49,6 +49,18 @@ export class CharactersService {
       ;
   }
 
+  getCharacterById(id: number): Observable<ICharacter> {
+    let url = `${this.getDefaultCharactersUrl}/${id}`;
+    return this.httpClient.get<ICharacter>(url).pipe(
+      map((getCharacterByIdResponse: ICharacter) => {
+        this.characters.push(getCharacterByIdResponse);
+        this.initLikes();
+
+        return getCharacterByIdResponse;
+      })
+    );
+  }
+
   initLikes() {
     this.getDataFromStorage();
 

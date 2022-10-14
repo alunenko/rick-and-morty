@@ -19,8 +19,8 @@ export class CharactersListComponent implements OnInit {
 
   }
 
-  like(item: ICharacter): void {
-    item.like = !item.like;
-    this.charactersListService.likeEvent.emit(item);
+  like(character: ICharacter): void {
+    character.like = !character.like;
+    this.charactersListService.likeEvent.emit(character);
   }
 }

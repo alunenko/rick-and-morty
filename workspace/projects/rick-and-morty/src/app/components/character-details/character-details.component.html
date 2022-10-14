@@ -1,0 +1,24 @@
+<ul *ngIf="character">
+  <li>Name: {{character.name}}</li>
+  <li>species: {{character.species}}</li>
+  <li>gender: {{character.gender}}</li>
+  <li>
+    location:
+    <ul>
+      <li>name: {{character.location.name}}</li>
+      <li>url: {{character.location.url}}</li>
+    </ul>
+  </li>
+  <li>
+    episode:
+    <ul>
+      <li *ngFor="let episode of character.episode">{{episode}}</li>
+    </ul>
+  </li>
+  <li>status: {{character.status}}</li>
+  <li>created: {{character.created}}</li>
+  <li><span [ngClass]="{'m-green': character.like}"
+            (click)="like(character)"
+            class="like"
+            [title]="character.like ? 'Liked' : 'Like'">L</span></li>
+</ul>

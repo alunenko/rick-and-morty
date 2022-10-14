@@ -1,6 +1,6 @@
-<p *ngFor="let item of characters">
-  <span>{{item.name}}</span>&nbsp;<span>{{item.status}}</span>&nbsp;<span [ngClass]="{'m-green': item.like}"
-                                                                          (click)="like(item)"
+<p *ngFor="let character of characters">
+  <span [routerLink]="['/character', character.id]">{{character.name}} {{character.status}}</span>&nbsp;<span [ngClass]="{'m-green': character.like}"
+                                                                          (click)="like(character)"
                                                                           class="like"
-                                                                          [title]="item.like ? 'Liked' : 'Like'">L</span>
+                                                                          [title]="character.like ? 'Liked' : 'Like'">L</span>
 </p>

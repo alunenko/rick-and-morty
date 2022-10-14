@@ -12,7 +12,7 @@ export class CharactersResolver implements Resolve<any> {
   ) {
 
   }
-  resolve(): Observable<any> {
+  resolve(): Observable<any> {console.log('resolve');
     return this.charactersService.getCharacters();
   }
 }
